@@ -3,6 +3,7 @@ package service;
 import dao.Stockage;
 import exception.CompteInexistantException;
 import model.CompteBancaire;
+import model.Depot;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +50,14 @@ public class GestionnaireComptes {
 
     public List<CompteBancaire> rechercherParTitulaire(String nomTitulaire) {
         return comptes.values().stream().filter(c -> c.getTitulaire().toLowerCase().contains(nomTitulaire.toLowerCase())).collect(Collectors.toList());
+    }
+
+    public void effectuerDepot(String numeroCompte, double montant) throws CompteInexistantException {
+        CompteBancaire compte = consulterCompte(numeroCompte);
+        Depot depot = new Depot(montant, compte);
+        depot.executer();
+        stockage.sauvegarderOperation(depot, null);
+        stockage.mettreAjourSolde(compte);
     }
 
     private void chargerComptes(){
