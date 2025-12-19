@@ -1,6 +1,7 @@
 package service;
 
 import dao.Stockage;
+import exception.CompteInexistantException;
 import model.CompteBancaire;
 
 import java.util.HashMap;
@@ -33,6 +34,14 @@ public class GestionnaireComptes {
         CompteBancaire compte = new CompteBancaire(numeroCompte, titulaire, soldeInitial);
         comptes.put(numeroCompte, compte);
         stockage.sauvegarderCompte(compte);
+        return compte;
+    }
+
+    public CompteBancaire consulterCompte(String numeroCompte) throws CompteInexistantException {
+        CompteBancaire compte = comptes.get(numeroCompte);
+        if (compte == null) {
+            throw new CompteInexistantException("Le Compte " + numeroCompte + " n'existe pas");
+        }
         return compte;
     }
 
