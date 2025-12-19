@@ -12,7 +12,7 @@ public class CompteBancaire {
     private String titulaire;
     private double solde;
     private Double plafond;
-    private List<Operation> historique;
+    private final List<Operation> historique;
 
     private static final Pattern PATTERN_NUMERO_COMPTE = Pattern.compile("^FR-\\d{4}-\\d{4}$");
 
@@ -54,7 +54,7 @@ public class CompteBancaire {
         }
         this.solde -= montant;
     }
-    
+
     public void ajouterOperation(Operation operation){
         this.historique.add(operation);
     }
