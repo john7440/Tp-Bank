@@ -2,8 +2,12 @@ package service;
 
 import dao.Stockage;
 import exception.CompteInexistantException;
+import exception.DepassementPlafondException;
+import exception.SoldeInsuffisantException;
 import model.CompteBancaire;
 import model.Depot;
+import model.Operation;
+import model.Retrait;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -55,12 +59,27 @@ public class GestionnaireComptes {
         return comptes.values().stream().filter(c -> c.getTitulaire().toLowerCase().contains(nomTitulaire.toLowerCase())).collect(Collectors.toList());
     }
 
+
     public void effectuerDepot(String numeroCompte, double montant) throws CompteInexistantException {
         CompteBancaire compte = consulterCompte(numeroCompte);
         Depot depot = new Depot(montant, compte);
         depot.executer();
         stockage.sauvegarderOperation(depot, null);
         stockage.mettreAjourSolde(compte);
+    }
+
+    public void effectuerRetrait(String numeroCompte, double montant)
+            throws CompteInexistantException, SoldeInsuffisantException, DepassementPlafondException {
+        CompteBancaire compte = consulterCompte(numeroCompte);
+        Retrait retrait = new Retrait(montant, compte);
+        retrait.executer();
+        stockage.sauvegarderOperation(retrait, null);
+        stockage.mettreAjourSolde(compte);
+    }
+
+    public List<Operation> consulterHistorique(String numeroCompte) throws CompteInexistantException {
+        CompteBancaire compte = consulterCompte(numeroCompte);
+        return compte.getHistorique();
     }
 
     private List<CompteBancaire> listerTousLesComptes(){
