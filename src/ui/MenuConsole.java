@@ -48,6 +48,8 @@ public class MenuConsole {
                 case 4:
                     effectuerRetrait();
                     break;
+                default:
+                    System.out.println("Choix invalide!");
             }
 
             }
@@ -66,22 +68,39 @@ public class MenuConsole {
                 System.out.println("Compte créé avec succès!");
                 System.out.println(compte);
             } catch (Exception e) {
-                System.out.println("Erreur : " + e.getMessage());
+                System.out.println("Erreur: " + e.getMessage());
             }
         }
 
         private void consulterCompte() {
             System.out.println("\n--- Consultation de compte ---");
-            System.out.print("Numéro de compte : ");
+            System.out.print("Numéro de compte: ");
             String numero = scan.nextLine();
 
             try {
                 CompteBancaire compte = gestionnaire.consulterCompte(numero);
                 System.out.println("\n" + compte);
             } catch (CompteInexistantException e) {
-                System.out.println("Erreur : " + e.getMessage());
+                System.out.println("Erreur: " + e.getMessage());
             }
         }
+
+    private void effectuerDepot() {
+        System.out.println("\n--- Dépôt ---");
+        System.out.print("Numéro de compte : ");
+        String numero = scan.nextLine();
+
+        System.out.print("Montant à déposer : ");
+        double montant = lireDouble();
+
+        try {
+            gestionnaire.effectuerDepot(numero, montant);
+            CompteBancaire compte = gestionnaire.consulterCompte(numero);
+            System.out.println("Dépôt effectué ! Nouveau solde : " + compte.getSolde() + "€");
+        } catch (Exception e) {
+            System.out.println("Erreur : " + e.getMessage());
+        }
+    }
 
         private void effectuerRetrait(){
             System.out.println("\n--- Retrait ---");
