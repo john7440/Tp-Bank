@@ -125,6 +125,20 @@ public class StockageBDD implements Stockage{
 
     @Override
     public void mettreAjourPlafond(CompteBancaire compte) {
+        String sql = "UPDATE compte_bancaire SET c_plafond = ? WHERE c_numero_compte = ?";
 
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+
+            if (compte.getPlafond() != null) {
+                statement.setDouble(1, compte.getPlafond());
+            } else {
+                statement.setNull(1, Types.DECIMAL);
+            }
+            statement.setString(2, compte.getNumeroCompte());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour du plafond: " + e.getMessage());
+        }
     }
 }
