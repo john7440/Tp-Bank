@@ -1,6 +1,10 @@
 package ui;
 
 import service.GestionnaireComptes;
+import model.CompteBancaire;
+import model.Operation;
+import exception.*;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -11,5 +15,27 @@ public class MenuConsole {
     public MenuConsole(GestionnaireComptes gestionnaire) {
         this.gestionnaire = gestionnaire;
         this.scan = new Scanner(System.in);
+    }
+
+    public void afficherMenuPrincipal() {
+        boolean continuer = true;
+
+        while (continuer) {
+            System.out.println("\n=== Gestion Bancaire - Menu principal: ===");
+            System.out.println("1. Créer un compte");
+            System.out.println("2. Consulter un compte");
+            System.out.println("3. Effectuer un dépot");
+            System.out.println("4. Effectuer un retrait");
+            System.out.println("5. Effectuer un virement");
+            System.out.println("6. Consulter l'historique");
+            System.out.println("7. Gérer le plafond d'un compte");
+            System.out.println("8. Lister tous les comptes");
+            System.out.println("0. Quitter");
+            System.out.println("Votre choix: ");
+
+            int choix = scan.nextInt();
+            
+            }
+        }
     }
 }
