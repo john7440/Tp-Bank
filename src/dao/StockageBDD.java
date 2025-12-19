@@ -124,7 +124,7 @@ public class StockageBDD implements Stockage{
     }
 
     @Override
-    public void mettreAjourPlafond(CompteBancaire compte) {
+    public void mettreAJourPlafond(CompteBancaire compte) {
         String sql = "UPDATE compte_bancaire SET c_plafond = ? WHERE c_numero_compte = ?";
 
         try (Connection connection = DatabaseConnection.getConnection();

@@ -45,6 +45,12 @@ public class GestionnaireComptes {
         return compte;
     }
 
+    public void definirPlafond(String numeroCompte, Double plafond) throws CompteInexistantException {
+        CompteBancaire compte = consulterCompte(numeroCompte);
+        compte.setPlafond(plafond);
+        stockage.mettreAJourPlafond(compte);
+    }
+
     public List<CompteBancaire> rechercherParTitulaire(String nomTitulaire) {
         return comptes.values().stream().filter(c -> c.getTitulaire().toLowerCase().contains(nomTitulaire.toLowerCase())).collect(Collectors.toList());
     }

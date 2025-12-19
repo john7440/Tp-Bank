@@ -10,5 +10,5 @@ public interface Stockage {
     Map<String, CompteBancaire> chargerComptes();
     void sauvegarderOperation(Operation operation, String numeroCompteDestination);
     void mettreAjourSolde(CompteBancaire compte);
-    void mettreAjourPlafond(CompteBancaire compte);
+    void mettreAJourPlafond(CompteBancaire compte);
 }
