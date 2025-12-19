@@ -14,7 +14,7 @@ rectangle "Système TP-Bank" {
   usecase "Gérer les plafonds" as UC7
 
   usecase "Vérifier le solde" as UC8
-  usecase "Valider le compte destinataire" as UC9
+
 
 
 CB -- UC1
@@ -27,7 +27,6 @@ CB -- UC7
 
 UC4 ..> UC8 : <<include>>
 UC5 ..> UC8 : <<include>>
-UC5 ..> UC9 : <<include>>
 
 note right of UC1
   Numéro: FR-XXXX-XXXX
