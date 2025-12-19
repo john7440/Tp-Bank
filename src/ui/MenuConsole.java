@@ -64,4 +64,14 @@ public class MenuConsole {
             scan.nextLine();
             return valeur;
         }
+
+        private int lireEntier(){
+            while(!scan.hasNextInt()) {
+                scan.next();
+                System.out.print("Veuillez entrer un nombre valide: ");
+            }
+            int valeur = scan.nextInt();
+            scan.nextLine();
+            return valeur;
+        }
 }
