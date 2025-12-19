@@ -1,0 +1,36 @@
+@startuml
+
+class CompteBancaire{
+  numeroCompte: String
+  titulaire: String
+  solde: double
+  plafond: double
+}
+
+abstract class Operation{
+  idOperation: int
+  date: LocalDateTime
+  montant: double
+}
+
+class Depot
+
+class Retrait
+
+class Virement{
+}
+
+class Banque{
+  comptes: Map<String, CompteBancaire>
+}
+
+Operation <|-- Depot
+Operation <|-- Retrait
+Operation <|-- Virement
+
+Operation "0..*" --> "1" CompteBancaire : source >
+Virement "0..*" --> "0..1" CompteBancaire : destination >
+
+Banque "1" o-- "0..*" CompteBancaire : gère
+
+@enduml
