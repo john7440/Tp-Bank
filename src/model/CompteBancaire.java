@@ -32,6 +32,13 @@ public class CompteBancaire {
         return PATTERN_NUMERO_COMPTE.matcher(numero).matches();
     }
 
+    public synchronized void deposer(Double montant) {
+        if (montant < 0) {
+            throw new IllegalArgumentException("Le montant doit être positif");
+        }
+        this.solde += montant;
+    }
+
     //Getters et Setters
     public String getNumeroCompte() {
         return numeroCompte;
