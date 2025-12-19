@@ -81,7 +81,30 @@ public class StockageBDD implements Stockage{
 
 
     @Override
-    public void sauvegarderOperation(Operation operation) {
+    public void sauvegarderOperation(Operation operation, String numeroCompteDestination) {
+        String sql = "INSERT INTO operation (o_date, o_montant, o_type_operation, c_numero_compte_source,+" +
+                " c_numero_compte_destination) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setTimestamp(1, Timestamp.valueOf(operation.getDate()));
+            statement.setDouble(2, operation.getMontant());
+            statement.setString(3, operation.getTypeOperation().name());
+            statement.setString(4, operation.getCompteSource().getNumeroCompte());
+
+            if (numeroCompteDestination != null){
+                statement.setString(5, numeroCompteDestination);
+            } else {
+                statement.setNull(5, Types.VARCHAR);
+            }
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la sauvegarde de l'opération: " + e.getMessage());
+        }
+
 
     }
 
