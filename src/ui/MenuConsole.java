@@ -35,6 +35,15 @@ public class MenuConsole {
 
             int choix = scan.nextInt();
 
+            switch (choix) {
+                case 1:
+                    creerCompte();
+                    break;
+                case 2:
+                    consulterCompte();
+                    break;
+            }
+
             }
         }
 
@@ -73,5 +82,18 @@ public class MenuConsole {
             int valeur = scan.nextInt();
             scan.nextLine();
             return valeur;
+        }
+
+        private void consulterCompte() {
+            System.out.println("\n--- Consultation de compte ---");
+            System.out.print("Numéro de compte : ");
+            String numero = scan.nextLine();
+
+            try {
+               CompteBancaire compte = gestionnaire.consulterCompte(numero);
+               System.out.println("\n" + compte);
+            } catch (CompteInexistantException e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
         }
 }
