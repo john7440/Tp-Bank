@@ -50,4 +50,9 @@ public class CompteBancaire {
         return new ArrayList<>(historique);
     }
 
+    @Override
+    public String toString() {
+        return String.format("Compte: %s | Titulaire: %s | Solde: %.2f€ | Plafond: %s",
+                numeroCompte, titulaire, solde, plafond != null ? plafond + "€" : "Non défini");
+    }
 }
