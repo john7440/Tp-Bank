@@ -1,5 +1,8 @@
 package model;
 
+import exception.DepassementPlafondException;
+import exception.SoldeInsuffisantException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -32,11 +35,24 @@ public class CompteBancaire {
         return PATTERN_NUMERO_COMPTE.matcher(numero).matches();
     }
 
-    public synchronized void deposer(Double montant) {
+    public synchronized void deposer(double montant) {
         if (montant < 0) {
             throw new IllegalArgumentException("Le montant doit être positif");
         }
         this.solde += montant;
+    }
+
+    public synchronized void retirer(double montant) throws SoldeInsuffisantException, DepassementPlafondException {
+        if (montant <= 0){
+            throw new IllegalArgumentException("Le montant doit être positif");
+        }
+        if (this.solde <= montant){
+            throw new DepassementPlafondException("Solde insuffisant! Solde actuel: " + this.solde + " €");
+        }
+        if (plafond != null && montant > plafond){
+            throw new DepassementPlafondException("Montant supérieur au plafond: " + plafond + " €");
+        }
+        this.solde -= montant;
     }
 
     //Getters et Setters
