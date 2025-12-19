@@ -4,10 +4,7 @@ import dao.Stockage;
 import exception.CompteInexistantException;
 import exception.DepassementPlafondException;
 import exception.SoldeInsuffisantException;
-import model.CompteBancaire;
-import model.Depot;
-import model.Operation;
-import model.Retrait;
+import model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -75,6 +72,21 @@ public class GestionnaireComptes {
         retrait.executer();
         stockage.sauvegarderOperation(retrait, null);
         stockage.mettreAjourSolde(compte);
+    }
+
+    public void effectuerVirement(String numeroCompteSource, String numeroCompteDestination, double montant)
+            throws CompteInexistantException, SoldeInsuffisantException, DepassementPlafondException {
+        if (numeroCompteSource.equals(numeroCompteDestination)) {
+            throw new IllegalArgumentException("Les comptes source et destination doivent être différents!");
+        }
+        CompteBancaire compteSource = consulterCompte(numeroCompteSource);
+        CompteBancaire compteDestination = consulterCompte(numeroCompteDestination);
+
+        Virement virement = new Virement(montant, compteSource, compteDestination);
+        virement.executer();
+        stockage.sauvegarderOperation(virement, compteDestination.getNumeroCompte());
+        stockage.mettreAjourSolde(compteSource);
+        stockage.mettreAjourSolde(compteDestination);
     }
 
     public List<Operation> consulterHistorique(String numeroCompte) throws CompteInexistantException {
