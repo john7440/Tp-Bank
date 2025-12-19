@@ -13,6 +13,14 @@ public class CompteBancaire {
 
     private static final Pattern PATTERN_NUMERO_COMPTE = Pattern.compile("^FR-\\d{4}-\\d{4}$");
 
+    public CompteBancaire(String numeroCompte, String titulaire, double soldeInitial) {
+    }
+
+    //Méthodes
+    public static boolean validerNumeroCompte(String numero) {
+        return PATTERN_NUMERO_COMPTE.matcher(numero).matches();
+    }
+
     //Getters et Setters
     public String getNumeroCompte() {
         return numeroCompte;
