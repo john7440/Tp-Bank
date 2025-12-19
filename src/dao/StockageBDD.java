@@ -105,12 +105,22 @@ public class StockageBDD implements Stockage{
             System.err.println("Erreur lors de la sauvegarde de l'opération: " + e.getMessage());
         }
 
-
     }
 
     @Override
     public void mettreAjourSolde(CompteBancaire compte) {
+        String sql = "UPDATE compte_bancaire SET c_solde = ? WHERE c_numero_compte = ?";
 
+        try (Connection connection = DatabaseConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)){
+
+            statement.setDouble(1, compte.getSolde());
+            statement.setString(2, compte.getNumeroCompte());
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Erreur lors de la mise à jour du solde: " + e.getMessage());
+        }
     }
 
     @Override
