@@ -34,8 +34,34 @@ public class MenuConsole {
             System.out.println("Votre choix: ");
 
             int choix = scan.nextInt();
-            
+
             }
         }
-    }
+
+        private void creerCompte() {
+            System.out.println("\n--- Création de compte ---");
+            System.out.print("Nom du titulaire : ");
+            String titulaire = scan.nextLine();
+
+            System.out.print("Solde initial (0 par défaut) : ");
+            double soldeInitial = lireDouble();
+
+            try {
+                CompteBancaire compte = gestionnaire.creerCompte(titulaire, soldeInitial);
+                System.out.println("Compte créé avec succès!");
+                System.out.println(compte);
+            } catch (Exception e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+        private double lireDouble() {
+            while(!scan.hasNextDouble()) {
+                scan.next();
+                System.out.print("Veuillez entrer un montant valide: ");
+            }
+            double valeur = scan.nextDouble();
+            scan.nextLine();
+            return valeur;
+        }
 }
