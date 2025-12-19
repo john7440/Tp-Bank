@@ -54,6 +54,9 @@ public class MenuConsole {
                 case 6:
                     consulterHistorique();
                     break;
+                case 7:
+                    gererPlafond();
+                    break;
 
                 default:
                     System.out.println("Choix invalide!");
@@ -64,10 +67,10 @@ public class MenuConsole {
 
         private void creerCompte() {
             System.out.println("\n--- Création de compte ---");
-            System.out.print("Nom du titulaire : ");
+            System.out.print("Nom du titulaire: ");
             String titulaire = scan.nextLine();
 
-            System.out.print("Solde initial (0 par défaut) : ");
+            System.out.print("Solde initial (0 par défaut): ");
             double soldeInitial = lireDouble();
 
             try {
@@ -94,10 +97,10 @@ public class MenuConsole {
 
         private void effectuerDepot() {
             System.out.println("\n--- Dépôt ---");
-            System.out.print("Numéro de compte : ");
+            System.out.print("Numéro de compte: ");
             String numero = scan.nextLine();
 
-            System.out.print("Montant à déposer : ");
+            System.out.print("Montant à déposer: ");
             double montant = lireDouble();
 
             try {
@@ -105,22 +108,22 @@ public class MenuConsole {
                 CompteBancaire compte = gestionnaire.consulterCompte(numero);
                 System.out.println("Dépôt effectué ! Nouveau solde : " + compte.getSolde() + "€");
             } catch (Exception e) {
-                System.out.println("Erreur : " + e.getMessage());
+                System.out.println("Erreur: " + e.getMessage());
             }
         }
 
         private void effectuerRetrait(){
             System.out.println("\n--- Retrait ---");
-            System.out.print("Numéro de compte : ");
+            System.out.print("Numéro de compte: ");
             String numero = scan.nextLine();
 
-            System.out.print("Montant à retirer : ");
+            System.out.print("Montant à retirer: ");
             double montant = lireDouble();
 
             try {
                 gestionnaire.effectuerRetrait(numero, montant);
                 CompteBancaire compte = gestionnaire.consulterCompte(numero);
-                System.out.println("Retrait effectué ! Nouveau solde : " + compte.getSolde() + " €");
+                System.out.println("Retrait effectué ! Nouveau solde: " + compte.getSolde() + " €");
             } catch (SoldeInsuffisantException | DepassementPlafondException | CompteInexistantException e) {
                 System.out.println("Erreur : " + e.getMessage());
             }
@@ -147,7 +150,7 @@ public class MenuConsole {
 
         private void consulterHistorique() {
             System.out.println("\n--- Historique des opérations ---");
-            System.out.print("Numéro de compte : ");
+            System.out.print("Numéro de compte: ");
             String numero = scan.nextLine();
 
             try {
@@ -160,6 +163,22 @@ public class MenuConsole {
                 }
             } catch (CompteInexistantException e) {
                 System.out.println("Erreur" + e.getMessage());
+            }
+        }
+
+        private void gererPlafond() {
+            System.out.println("\n--- Gestion du plafond ---");
+            System.out.print("Numéro de compte: ");
+            String numero = scan.nextLine();
+
+            System.out.print("Nouveau plafond (0 pour désactiver): ");
+            double plafond = lireDouble();
+
+            try {
+                gestionnaire.definirPlafond(numero, plafond > 0 ? plafond : null);
+                System.out.println("Plafond mis à jour!");
+            } catch (CompteInexistantException e) {
+                System.out.println("Erreur: " + e.getMessage());
             }
         }
 
