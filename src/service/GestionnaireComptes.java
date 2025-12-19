@@ -5,8 +5,10 @@ import exception.CompteInexistantException;
 import model.CompteBancaire;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class GestionnaireComptes {
     private Map<String, CompteBancaire> comptes;
@@ -45,6 +47,9 @@ public class GestionnaireComptes {
         return compte;
     }
 
+    public List<CompteBancaire> rechercherParTitulaire(String nomTitulaire) {
+        return comptes.values().stream().filter(c -> c.getTitulaire().toLowerCase().contains(nomTitulaire.toLowerCase())).collect(Collectors.toList());
+    }
 
     private void chargerComptes(){
         this.comptes = stockage.chargerComptes();
