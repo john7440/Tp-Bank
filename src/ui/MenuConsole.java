@@ -57,7 +57,13 @@ public class MenuConsole {
                 case 7:
                     gererPlafond();
                     break;
-
+                case 8:
+                    listerComptes();
+                    break;
+                case 0:
+                    continuer = false;
+                    System.out.println("Vous quittez le programme! Au revoir!");
+                    break;
                 default:
                     System.out.println("Choix invalide!");
             }
@@ -179,6 +185,17 @@ public class MenuConsole {
                 System.out.println("Plafond mis à jour!");
             } catch (CompteInexistantException e) {
                 System.out.println("Erreur: " + e.getMessage());
+            }
+        }
+
+        private void listerComptes() {
+            System.out.println("\n--- Liste des comptes ---");
+            List<CompteBancaire> comptes = gestionnaire.listerTousLesComptes();
+
+            if (comptes.isEmpty()) {
+                System.out.println("Aucun compte enregistré.");
+            } else {
+                comptes.forEach(System.out::println);
             }
         }
 

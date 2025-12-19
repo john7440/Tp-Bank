@@ -94,7 +94,7 @@ public class GestionnaireComptes {
         return compte.getHistorique();
     }
 
-    private List<CompteBancaire> listerTousLesComptes(){
+    public List<CompteBancaire> listerTousLesComptes(){
         return new ArrayList<>(comptes.values());
     }
 
