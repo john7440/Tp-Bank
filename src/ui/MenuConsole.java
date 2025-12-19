@@ -51,6 +51,10 @@ public class MenuConsole {
                 case 5:
                     effectuerVirement();
                     break;
+                case 6:
+                    consulterHistorique();
+                    break;
+
                 default:
                     System.out.println("Choix invalide!");
             }
@@ -138,6 +142,24 @@ public class MenuConsole {
                 System.out.println("Virement effectué avec succès !");
             } catch (Exception e) {
                 System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+        private void consulterHistorique() {
+            System.out.println("\n--- Historique des opérations ---");
+            System.out.print("Numéro de compte : ");
+            String numero = scan.nextLine();
+
+            try {
+                List<Operation> historique = gestionnaire.consulterHistorique(numero);
+                if (historique.isEmpty()) {
+                    System.out.println("Aucune opération enregistrée!");
+                } else {
+                    System.out.println("\nHistorique :");
+                    historique.forEach(System.out::println);
+                }
+            } catch (CompteInexistantException e) {
+                System.out.println("Erreur" + e.getMessage());
             }
         }
 
