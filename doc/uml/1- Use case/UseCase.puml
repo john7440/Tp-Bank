@@ -1,0 +1,56 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Conseiller Bancaire" as CB
+
+rectangle "Système TP-Bank" {
+  usecase "Créer un compte bancaire" as UC1
+  usecase "Consulter un compte bancaire" as UC2
+  usecase "Effectuer un dépôt" as UC3
+  usecase "Effectuer un retrait" as UC4
+  usecase "Effectuer un virement" as UC5
+  usecase "Consulter l'historique des opérations" as UC6
+  usecase "Gérer les plafonds" as UC7
+
+  usecase "Vérifier le solde" as UC8
+  usecase "Valider le compte destinataire" as UC9
+
+
+CB -- UC1
+CB -- UC2
+CB -- UC3
+CB -- UC4
+CB -- UC5
+CB -- UC6
+CB -- UC7
+
+UC4 ..> UC8 : <<include>>
+UC5 ..> UC8 : <<include>>
+UC5 ..> UC9 : <<include>>
+
+note right of UC1
+  Numéro: FR-XXXX-XXXX
+  Titulaire et solde
+end note
+
+note right of UC3
+  Exceptions possibles:
+  - Compte inexistant
+  - Dépassement de plafond
+end note
+
+note right of UC4
+  Exceptions possibles:
+  - Compte inexistant
+  - Solde insuffisant
+  - Dépassement de plafond
+end note
+
+note right of UC5
+  Exceptions possibles:
+  - Compte inexistant
+  - Solde insuffisant
+end note
+}
+@enduml
