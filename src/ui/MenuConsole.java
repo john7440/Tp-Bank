@@ -33,7 +33,7 @@ public class MenuConsole {
             System.out.println("0. Quitter");
             System.out.println("Votre choix: ");
 
-            int choix = scan.nextInt();
+            int choix = lireEntier();
 
             switch (choix) {
                 case 1:
@@ -41,6 +41,12 @@ public class MenuConsole {
                     break;
                 case 2:
                     consulterCompte();
+                    break;
+                case 3:
+                    effectuerDepot();
+                    break;
+                case 4:
+                    effectuerRetrait();
                     break;
             }
 
@@ -60,6 +66,36 @@ public class MenuConsole {
                 System.out.println("Compte créé avec succès!");
                 System.out.println(compte);
             } catch (Exception e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+        private void consulterCompte() {
+            System.out.println("\n--- Consultation de compte ---");
+            System.out.print("Numéro de compte : ");
+            String numero = scan.nextLine();
+
+            try {
+                CompteBancaire compte = gestionnaire.consulterCompte(numero);
+                System.out.println("\n" + compte);
+            } catch (CompteInexistantException e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+        private void effectuerRetrait(){
+            System.out.println("\n--- Retrait ---");
+            System.out.print("Numéro de compte : ");
+            String numero = scan.nextLine();
+
+            System.out.print("Montant à retirer : ");
+            double montant = lireDouble();
+
+            try {
+                gestionnaire.effectuerRetrait(numero, montant);
+                CompteBancaire compte = gestionnaire.consulterCompte(numero);
+                System.out.println("Retrait effectué ! Nouveau solde : " + compte.getSolde() + " €");
+            } catch (SoldeInsuffisantException | DepassementPlafondException | CompteInexistantException e) {
                 System.out.println("Erreur : " + e.getMessage());
             }
         }
@@ -84,16 +120,4 @@ public class MenuConsole {
             return valeur;
         }
 
-        private void consulterCompte() {
-            System.out.println("\n--- Consultation de compte ---");
-            System.out.print("Numéro de compte : ");
-            String numero = scan.nextLine();
-
-            try {
-               CompteBancaire compte = gestionnaire.consulterCompte(numero);
-               System.out.println("\n" + compte);
-            } catch (CompteInexistantException e) {
-                System.out.println("Erreur : " + e.getMessage());
-            }
-        }
 }
