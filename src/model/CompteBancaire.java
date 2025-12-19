@@ -54,6 +54,10 @@ public class CompteBancaire {
         }
         this.solde -= montant;
     }
+    
+    public void ajouterOperation(Operation operation){
+        this.historique.add(operation);
+    }
 
     //Getters et Setters
     public String getNumeroCompte() {
