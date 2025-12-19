@@ -5,10 +5,7 @@ import exception.CompteInexistantException;
 import model.CompteBancaire;
 import model.Depot;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GestionnaireComptes {
@@ -58,6 +55,10 @@ public class GestionnaireComptes {
         depot.executer();
         stockage.sauvegarderOperation(depot, null);
         stockage.mettreAjourSolde(compte);
+    }
+
+    private List<CompteBancaire> listerTousLesComptes(){
+        return new ArrayList<>(comptes.values());
     }
 
     private void chargerComptes(){
