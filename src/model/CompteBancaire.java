@@ -13,7 +13,18 @@ public class CompteBancaire {
 
     private static final Pattern PATTERN_NUMERO_COMPTE = Pattern.compile("^FR-\\d{4}-\\d{4}$");
 
+    //Constructeur
     public CompteBancaire(String numeroCompte, String titulaire, double soldeInitial) {
+        if (!validerNumeroCompte(numeroCompte)) {
+            throw new IllegalArgumentException("Format de numéro de compte invalide! Attendu: FR-XXXX-XXXX");
+        }
+        if (soldeInitial < 0) {
+            throw new IllegalArgumentException("Le solde initial ne peut pas être négatif!");
+        }
+        this.numeroCompte = numeroCompte;
+        this.titulaire = titulaire;
+        this.solde = soldeInitial;
+        this.historique = new ArrayList<>();
     }
 
     //Méthodes
