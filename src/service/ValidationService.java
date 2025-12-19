@@ -12,4 +12,8 @@ public class ValidationService {
     public static boolean validerMontant(double montant) {
         return montant > 0;
     }
+
+    public static boolean validerNomTitulaire(String nom) {
+        return nom != null && !nom.trim().isEmpty() && nom.length() >= 3;
+    }
 }
