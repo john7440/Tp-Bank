@@ -48,6 +48,9 @@ public class MenuConsole {
                 case 4:
                     effectuerRetrait();
                     break;
+                case 5:
+                    effectuerVirement();
+                    break;
                 default:
                     System.out.println("Choix invalide!");
             }
@@ -85,22 +88,22 @@ public class MenuConsole {
             }
         }
 
-    private void effectuerDepot() {
-        System.out.println("\n--- Dépôt ---");
-        System.out.print("Numéro de compte : ");
-        String numero = scan.nextLine();
+        private void effectuerDepot() {
+            System.out.println("\n--- Dépôt ---");
+            System.out.print("Numéro de compte : ");
+            String numero = scan.nextLine();
 
-        System.out.print("Montant à déposer : ");
-        double montant = lireDouble();
+            System.out.print("Montant à déposer : ");
+            double montant = lireDouble();
 
-        try {
-            gestionnaire.effectuerDepot(numero, montant);
-            CompteBancaire compte = gestionnaire.consulterCompte(numero);
-            System.out.println("Dépôt effectué ! Nouveau solde : " + compte.getSolde() + "€");
-        } catch (Exception e) {
-            System.out.println("Erreur : " + e.getMessage());
+            try {
+                gestionnaire.effectuerDepot(numero, montant);
+                CompteBancaire compte = gestionnaire.consulterCompte(numero);
+                System.out.println("Dépôt effectué ! Nouveau solde : " + compte.getSolde() + "€");
+            } catch (Exception e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
         }
-    }
 
         private void effectuerRetrait(){
             System.out.println("\n--- Retrait ---");
@@ -115,6 +118,25 @@ public class MenuConsole {
                 CompteBancaire compte = gestionnaire.consulterCompte(numero);
                 System.out.println("Retrait effectué ! Nouveau solde : " + compte.getSolde() + " €");
             } catch (SoldeInsuffisantException | DepassementPlafondException | CompteInexistantException e) {
+                System.out.println("Erreur : " + e.getMessage());
+            }
+        }
+
+        private void effectuerVirement() {
+            System.out.println("\n--- Virement ---");
+            System.out.print("Compte source : ");
+            String source = scan.nextLine();
+
+            System.out.print("Compte destination : ");
+            String destination = scan.nextLine();
+
+            System.out.print("Montant : ");
+            double montant = lireDouble();
+
+            try {
+                gestionnaire.effectuerVirement(source, destination, montant);
+                System.out.println("Virement effectué avec succès !");
+            } catch (Exception e) {
                 System.out.println("Erreur : " + e.getMessage());
             }
         }
