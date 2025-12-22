@@ -88,5 +88,20 @@ Packages principaux:
 - ```ui```: interface console (menus, saisies, affichages)
 - ```main```: point d’entrée de l’application
 
+#### 5. Configuration du driver MariaDB
+Dans la class de connexion: 
+```
+// dao/DatabaseConnection.java
+private static final String URL = "jdbc:mariadb://localhost:3306/tp_bank";
+private static final String USER = "bank_admin";
+private static final String PASSWORD = "B@nk2025!Secure";
+
+Class.forName("org.mariadb.jdbc.Driver");
+```
+Assurez-vous que:
+- Le fichier ```mariadb-java-client-2.3.0.jar``` est présent dans ```lib/```
+- Le JAR est bien ajouté au classpath de votre IDE ou de vos commandes de compilation
+
+
 
 
