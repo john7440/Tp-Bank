@@ -89,7 +89,7 @@ Packages principaux:
 - ```main```: point d’entrée de l’application
 
 #### 5. Configuration du driver MariaDB
-Dans la class de connexion: 
+Dans la classe de connexion: 
 ```
 // dao/DatabaseConnection.java
 private static final String URL = "jdbc:mariadb://localhost:3306/tp_bank";
@@ -102,6 +102,36 @@ Assurez-vous que:
 - Le fichier ```mariadb-java-client-2.3.0.jar``` est présent dans ```lib/```
 - Le JAR est bien ajouté au classpath de votre IDE ou de vos commandes de compilation
 
+#### 6. Compilation et exécution
 
+Depuis un IDE:
+- Importer le projet comme projet Java
+- Ajouter ```lib/mariadb-java-client-2.3.0.jar``` au classpath / Build Path
+- Configurer la classe ```Main``` comme classe principale
+- Exécuter le projet
 
+#### 7. Utilisation de l’application (vue conseiller)
+
+Après lancement, un menu console s’affiche:
+1. Créer un compte
+2. Consulter un compte
+3. Effectuer un dépôt
+4. Effectuer un retrait
+5. Effectuer un virement
+6. Consulter l’historique
+7. Gérer le plafond
+8. Lister tous les comptes
+0. Quitter
+
+*Fonctionnalités utilisateur*:
+​
+- Créer un compte : saisie du titulaire et éventuellement du solde initial. Un numéro de compte au format ```FR-XXXX-XXXX``` est généré automatiquement.
+- Consulter un compte : saisie du numéro de compte, affichage des informations et du solde.
+- Dépôt : saisie du numéro de compte et du montant (strictement positif), mise à jour du solde et enregistrement de l’opération de type ```DEPOT```.
+- Retrait : vérification de l’existence du compte, du solde suffisant et du respect du plafond, enregistrement en ```RETRAIT```.
+- Virement : vérification des deux comptes, du solde et du plafond, débit du compte source et crédit du compte destination, enregistrement en ```VIREMENT```.
+- Historique : affichage de la liste des opérations (date, type, montant, comptes concernés) pour un compte donné.
+- Plafond : définition ou modification du plafond des retraits/virements sur un compte.
+
+Les erreurs métier sont signalées clairement (compte inexistant, solde insuffisant, dépassement de plafond, montants invalides)
 
