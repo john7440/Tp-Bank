@@ -82,8 +82,9 @@ public class StockageBDD implements Stockage{
 
     @Override
     public void sauvegarderOperation(Operation operation, String numeroCompteDestination) {
-        String sql = "INSERT INTO operation (o_date, o_montant, o_type_operation, c_numero_compte_source,+" +
-                " c_numero_compte_destination) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO operation " +
+                "(o_date, o_montant, o_type_operation, c_numero_compte_source, c_numero_compte_destination) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql)){
