@@ -79,5 +79,14 @@ INSERT INTO compte_bancaire (c_numero_compte, c_titulaire, c_solde, c_plafond) V
 ('FR-7630-0004', 'Sophie Bernard', 12500.00, 2000.00);
 ```
 
+#### 4. Structure du projet
+Packages principaux:
+- ```model```: objets métier (compte, opérations)
+- ```exception```: exceptions métiers pour les cas d’erreur (compte inexistant, solde insuffisant, dépassement plafond)
+- ```service```: logique métier (création de comptes, dépôts, retraits, virements, plafonds, historique)
+- ```dao```: accès à la base de données
+- ```ui```: interface console (menus, saisies, affichages)
+- ```main```: point d’entrée de l’application
+
 
 
